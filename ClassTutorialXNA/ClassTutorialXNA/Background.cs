@@ -29,11 +29,13 @@ namespace ClassTutorialXNA
 
         public void Update()
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.Right))
-                rectangle.X -= 3;
+            //if (Keyboard.GetState().IsKeyDown(Keys.Right))
+            //    rectangle.X -= 3;
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Left))
-                rectangle.X += 3;
+            //if (Keyboard.GetState().IsKeyDown(Keys.Left))
+            //    rectangle.X += 3;
+
+            rectangle.X -= 3;
 
         }
 

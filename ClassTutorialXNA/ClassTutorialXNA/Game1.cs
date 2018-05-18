@@ -95,14 +95,11 @@ namespace ClassTutorialXNA
 
             luke.Update();
 
-            if (luke.rectangle.X >= 400)
-            {
-                rocksBack1.Update();
-                rocksFront1.Update();
+            rocksBack1.Update();
+            rocksFront1.Update();
 
-                rocksBack2.Update();
-                rocksFront2.Update();
-            }
+            rocksBack2.Update();
+            rocksFront2.Update();
             
             base.Update(gameTime);
         }
