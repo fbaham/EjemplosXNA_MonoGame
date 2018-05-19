@@ -9,11 +9,9 @@ using System.Threading.Tasks;
 
 namespace ClassTutorialXNA
 {
-    class Background
+    class Background : Sprite
     {
-        public Texture2D texture;
-        public Rectangle rectangle;
-        public void Draw(SpriteBatch spriteBatch)
+        public new void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, rectangle, Color.White);
         }

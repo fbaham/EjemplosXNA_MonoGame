@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/francisco.bahamondes/source/repos/XNA/ClassTutorialXNA/ClassTutorialXNA/Content/layers/clouds_4.png</SourceFile>
-  <SourceTime>2018-05-18T15:37:11.5054028-04:00</SourceTime>
-  <DestFile>C:/Users/francisco.bahamondes/source/repos/XNA/ClassTutorialXNA/ClassTutorialXNA/Content/bin/Windows/layers/clouds_4.xnb</DestFile>
-  <DestTime>2018-05-19T10:44:01.8056411-04:00</DestTime>
+  <SourceFile>C:/Users/francisco.bahamondes/source/repos/XNA/ClassTutorialXNA/ClassTutorialXNA/Content/Sprites/Luke.png</SourceFile>
+  <SourceTime>2018-05-19T12:40:08.0956024-04:00</SourceTime>
+  <DestFile>C:/Users/francisco.bahamondes/source/repos/XNA/ClassTutorialXNA/ClassTutorialXNA/Content/bin/Windows/Sprites/Luke.xnb</DestFile>
+  <DestTime>2018-05-19T12:43:37.7626061-04:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T12:05:36-03:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

@@ -19,8 +19,10 @@ namespace ClassTutorialXNA
         Scrolling rocksBack2;
         Scrolling rocksFront2;
 
+        Scrolling[] clouds;
+
         // Game World
-        Sprite luke, lukeBlue;
+        Animation luke;
 
         public Game1()
         {
@@ -36,7 +38,8 @@ namespace ClassTutorialXNA
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            clouds = new Scrolling[4];
+            luke = new Animation(Content.Load<Texture2D>("Sprites/Luke"), new Vector2(100, 400), 49, 49);
 
             base.Initialize();
         }
@@ -57,7 +60,14 @@ namespace ClassTutorialXNA
             rocksBack2 = new Scrolling(Content.Load<Texture2D>("layers/rocks_1"), new Rectangle(800, 0, 800, 480));
             rocksFront2 = new Scrolling(Content.Load<Texture2D>("layers/rocks_2"), new Rectangle(800, 0, 800, 480));
 
-            luke = new Character(Content.Load<Texture2D>("Luke_idle"), new Rectangle(10,400, Content.Load<Texture2D>("Luke_idle").Width, Content.Load<Texture2D>("Luke_idle").Height),GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
+            rocksFront2 = new Scrolling(Content.Load<Texture2D>("layers/rocks_2"), new Rectangle(800, 0, 800, 480));
+
+            clouds[0] = new Scrolling(Content.Load<Texture2D>("layers/clouds_1"), new Rectangle(0, 0, 800, 480));
+            clouds[1] = new Scrolling(Content.Load<Texture2D>("layers/clouds_2"), new Rectangle(0, 0, 800, 480));
+            clouds[2] = new Scrolling(Content.Load<Texture2D>("layers/clouds_3"), new Rectangle(0, 0, 800, 480));
+            clouds[3] = new Scrolling(Content.Load<Texture2D>("layers/clouds_4"), new Rectangle(0, 0, 800, 480));
+
+            
         }
 
         /// <summary>
@@ -93,7 +103,7 @@ namespace ClassTutorialXNA
             if (rocksFront2.rectangle.X + rocksFront2.rectangle.Width <= 0)
                 rocksFront2.rectangle.X = rocksFront1.rectangle.X + rocksFront1.rectangle.Width;
 
-            luke.Update();
+            luke.Update(gameTime);
 
             rocksBack1.Update();
             rocksFront1.Update();
@@ -123,6 +133,8 @@ namespace ClassTutorialXNA
 
             luke.Draw(spriteBatch);
 
+            foreach (Scrolling cloud in clouds)
+                cloud.Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);
