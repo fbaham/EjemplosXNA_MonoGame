@@ -13,19 +13,20 @@ namespace ClassTutorialXNA
     {
         public new void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, rectangle, Color.White);
+            spriteBatch.Draw(texture, rectangle, color);
         }
     }
 
     class Scrolling : Background
     {
-        public Scrolling(Texture2D newTexture, Rectangle newRectange)
+        public Scrolling(Texture2D newTexture, Rectangle newRectange, Color newColor)
         {
             texture = newTexture;
             rectangle = newRectange;
+            color = newColor;
         }
 
-        public void Update()
+        public new void Update()
         {
             //if (Keyboard.GetState().IsKeyDown(Keys.Right))
             //    rectangle.X -= 3;
@@ -33,7 +34,7 @@ namespace ClassTutorialXNA
             //if (Keyboard.GetState().IsKeyDown(Keys.Left))
             //    rectangle.X += 3;
 
-            rectangle.X -= 3;
+            //rectangle.X -= 3;
 
         }
 

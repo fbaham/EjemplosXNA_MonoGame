@@ -121,6 +121,13 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/player.jpg
 
+#begin Fonts/basicFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/basicFont.spritefont
+
 #begin Sprites/Luke.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -132,11 +139,4 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/Luke.png
-
-#begin Fonts/basicFont.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Fonts/basicFont.spritefont
 

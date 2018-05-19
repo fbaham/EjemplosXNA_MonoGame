@@ -15,13 +15,17 @@ namespace ClassTutorialXNA
         Vector2 origin;
         Vector2 velocity;
 
-        int currentFrame;
-        int currentRow;
+        public int currentFrame;
+        public int currentRow;
         int frameHeight;
         int frameWidth;
 
+        SpriteEffects effects;
+
+        public bool direction = true; //true = right - false = left
+
         float timer;
-        float interval = 75;
+        float interval = 50;
 
         public Animation(Texture2D texture, Vector2 position, int frameHeight, int frameWidth)
         {
@@ -66,12 +70,15 @@ namespace ClassTutorialXNA
             timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds / 2;
             if (timer > interval)
             {
+                if (!direction)
+                    direction = true;
+                effects = SpriteEffects.None;
+                currentRow = 1;
                 currentFrame++;
                 timer = 0;
                 if (currentFrame > 8)
                 {
                     currentFrame = 0;
-                    currentRow = 1;
                 }                   
             }
         }
@@ -81,12 +88,15 @@ namespace ClassTutorialXNA
             timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds / 2;
             if (timer > interval)
             {
+                if (direction)
+                    direction = false;
+                effects = SpriteEffects.None;
+                currentRow = 2;
                 currentFrame++;
                 timer = 0;
                 if (currentFrame > 8)
                 {
-                    currentFrame = 0;
-                    currentRow = 2;     
+                    currentFrame = 0;     
                 }                    
             }
         }
@@ -96,12 +106,16 @@ namespace ClassTutorialXNA
             timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds / 10;
             if (timer > interval)
             {
+                if(direction)
+                    effects = SpriteEffects.None;
+                else
+                    effects = SpriteEffects.FlipHorizontally;
+            currentRow = 0;
                 currentFrame++;
                 timer = 0;
                 if (currentFrame > 2)
                 {
                     currentFrame = 0;
-                    currentRow = 0;
                 }
                     
             }
@@ -109,7 +123,7 @@ namespace ClassTutorialXNA
 
         public new void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, rectangle, Color.White, 0f, origin, 1.0f, SpriteEffects.None, 0);
+            spriteBatch.Draw(texture, position, rectangle, Color.White, 0f, origin, 1.0f, effects, 0);
         }
     }
 }

@@ -13,6 +13,7 @@ namespace ClassTutorialXNA
     {
         public Texture2D texture;
         public Rectangle rectangle;
+        public Color color;
         public int screenWidth;
         public int screenHeight;
 
