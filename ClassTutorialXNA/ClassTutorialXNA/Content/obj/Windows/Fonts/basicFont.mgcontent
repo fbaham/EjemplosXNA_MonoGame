@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SourceFile>C:/Users/francisco.bahamondes/source/repos/XNA/ClassTutorialXNA/ClassTutorialXNA/Content/Fonts/basicFont.spritefont</SourceFile>
+  <SourceTime>2015-01-19T20:24:04-03:00</SourceTime>
+  <DestFile>C:/Users/francisco.bahamondes/source/repos/XNA/ClassTutorialXNA/ClassTutorialXNA/Content/bin/Windows/Fonts/basicFont.xnb</DestFile>
+  <DestTime>2018-05-19T13:28:05.8468973-04:00</DestTime>
+  <Importer>FontDescriptionImporter</Importer>
+  <ImporterTime>2017-03-01T12:05:36-03:00</ImporterTime>
+  <Processor>FontDescriptionProcessor</Processor>
+  <ProcessorTime>2017-03-01T12:05:36-03:00</ProcessorTime>
+  <Parameters>
+    <Key>PremultiplyAlpha</Key>
+    <Value>True</Value>
+  </Parameters>
+  <Parameters>
+    <Key>TextureFormat</Key>
+    <Value>Compressed</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput />
+</PipelineBuildEvent>

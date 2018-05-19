@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>c:/users/francisco.bahamondes/source/repos/ClassTutorialXNA/ClassTutorialXNA/Content/layers/sky.png</SourceFile>
+  <SourceFile>C:/Users/francisco.bahamondes/source/repos/XNA/ClassTutorialXNA/ClassTutorialXNA/Content/layers/sky.png</SourceFile>
   <SourceTime>2018-05-18T15:37:11.5523271-04:00</SourceTime>
-  <DestFile>c:/users/francisco.bahamondes/source/repos/ClassTutorialXNA/ClassTutorialXNA/Content/bin/Windows/layers/sky.xnb</DestFile>
-  <DestTime>2018-05-18T15:42:25.4635256-04:00</DestTime>
+  <DestFile>C:/Users/francisco.bahamondes/source/repos/XNA/ClassTutorialXNA/ClassTutorialXNA/Content/bin/Windows/layers/sky.xnb</DestFile>
+  <DestTime>2018-05-19T10:44:03.4927529-04:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T12:05:36-03:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

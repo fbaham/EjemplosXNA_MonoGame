@@ -9,6 +9,20 @@ namespace ClassTutorialXNA
     /// </summary>
     public class Game1 : Game
     {
+        public enum GameState
+        {
+            MainMenu,
+            LevelSelect,
+            Level1,
+        }
+
+        GameState CurrentState = GameState.MainMenu;
+
+        int Level;
+
+        SpriteFont font;
+        int score;
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
@@ -19,8 +33,10 @@ namespace ClassTutorialXNA
         Scrolling rocksBack2;
         Scrolling rocksFront2;
 
+        Scrolling[] clouds;
+
         // Game World
-        Sprite luke, lukeBlue;
+        Animation luke;
 
         public Game1()
         {
@@ -36,7 +52,8 @@ namespace ClassTutorialXNA
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            clouds = new Scrolling[4];
+            luke = new Animation(Content.Load<Texture2D>("Sprites/Luke"), new Vector2(100, 400), 49, 49);
 
             base.Initialize();
         }
@@ -49,15 +66,24 @@ namespace ClassTutorialXNA
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            sky = new Scrolling(Content.Load<Texture2D>("layers/sky"), new Rectangle(0, 0, 800, 480));
+            sky = new Scrolling(Content.Load<Texture2D>("layers/sky"), new Rectangle(0, 0, 800, 480), Color.White);
 
-            rocksBack1 = new Scrolling(Content.Load<Texture2D>("layers/rocks_1"), new Rectangle(0, 0, 800, 480));
-            rocksFront1 = new Scrolling(Content.Load<Texture2D>("layers/rocks_2"), new Rectangle(0, 0, 800, 480));
+            rocksBack1 = new Scrolling(Content.Load<Texture2D>("layers/rocks_1"), new Rectangle(0, 0, 800, 480), Color.White);
+            rocksFront1 = new Scrolling(Content.Load<Texture2D>("layers/rocks_2"), new Rectangle(0, 0, 800, 480), Color.White);
 
-            rocksBack2 = new Scrolling(Content.Load<Texture2D>("layers/rocks_1"), new Rectangle(800, 0, 800, 480));
-            rocksFront2 = new Scrolling(Content.Load<Texture2D>("layers/rocks_2"), new Rectangle(800, 0, 800, 480));
+            rocksBack2 = new Scrolling(Content.Load<Texture2D>("layers/rocks_1"), new Rectangle(800, 0, 800, 480), Color.White);
+            rocksFront2 = new Scrolling(Content.Load<Texture2D>("layers/rocks_2"), new Rectangle(800, 0, 800, 480), Color.White);
 
-            luke = new Character(Content.Load<Texture2D>("Luke_idle"), new Rectangle(10,400, Content.Load<Texture2D>("Luke_idle").Width, Content.Load<Texture2D>("Luke_idle").Height),GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
+            rocksFront2 = new Scrolling(Content.Load<Texture2D>("layers/rocks_2"), new Rectangle(800, 0, 800, 480), Color.White);
+
+            clouds[0] = new Scrolling(Content.Load<Texture2D>("layers/clouds_1"), new Rectangle(0, 0, 800, 480), Color.White);
+            clouds[1] = new Scrolling(Content.Load<Texture2D>("layers/clouds_2"), new Rectangle(0, 0, 800, 480), Color.White);
+            clouds[2] = new Scrolling(Content.Load<Texture2D>("layers/clouds_3"), new Rectangle(0, 0, 800, 480), Color.White);
+            clouds[3] = new Scrolling(Content.Load<Texture2D>("layers/clouds_4"), new Rectangle(0, 0, 800, 480), Color.White);
+
+            font = Content.Load<SpriteFont>("Fonts/basicFont");
+
+            
         }
 
         /// <summary>
@@ -79,7 +105,22 @@ namespace ClassTutorialXNA
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            
+            switch(CurrentState)
+            {
+                case GameState.MainMenu:
+                    if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                    {
+                        CurrentState = GameState.LevelSelect;
+                    }
+                    break;
+
+                case GameState.LevelSelect:
+                    if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+                    {
+                        CurrentState = GameState.Level1;
+                    }
+                    break;           
+            }
 
             if (rocksBack1.rectangle.X + rocksBack1.rectangle.Width <= 0)
                 rocksBack1.rectangle.X = rocksBack2.rectangle.X + rocksBack2.rectangle.Width;
@@ -93,16 +134,13 @@ namespace ClassTutorialXNA
             if (rocksFront2.rectangle.X + rocksFront2.rectangle.Width <= 0)
                 rocksFront2.rectangle.X = rocksFront1.rectangle.X + rocksFront1.rectangle.Width;
 
-            luke.Update();
+            luke.Update(gameTime);
 
-            if (luke.rectangle.X >= 400)
-            {
-                rocksBack1.Update();
-                rocksFront1.Update();
+            rocksBack1.Update();
+            rocksFront1.Update();
 
-                rocksBack2.Update();
-                rocksFront2.Update();
-            }
+            rocksBack2.Update();
+            rocksFront2.Update();
             
             base.Update(gameTime);
         }
@@ -116,16 +154,36 @@ namespace ClassTutorialXNA
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
-            sky.Draw(spriteBatch);
 
-            rocksBack1.Draw(spriteBatch);
-            rocksFront1.Draw(spriteBatch);
+            switch (CurrentState)
+            {
+                case GameState.MainMenu:
+                    GraphicsDevice.Clear(Color.Blue);
+                    break;
 
-            rocksBack2.Draw(spriteBatch);
-            rocksFront2.Draw(spriteBatch);
+                case GameState.LevelSelect:
+                    GraphicsDevice.Clear(Color.Red);
+                    break;
 
-            luke.Draw(spriteBatch);
+                case GameState.Level1:
+                    sky.Draw(spriteBatch);
 
+                    rocksBack1.Draw(spriteBatch);
+                    rocksFront1.Draw(spriteBatch);
+
+                    rocksBack2.Draw(spriteBatch);
+                    rocksFront2.Draw(spriteBatch);
+
+                    luke.Draw(spriteBatch);
+
+                    foreach (Scrolling cloud in clouds)
+                        cloud.Draw(spriteBatch);
+                    spriteBatch.DrawString(font, "Current Frame: " + luke.currentFrame, new Vector2(10,10), Color.Purple);
+                    spriteBatch.DrawString(font, "Current Row: " + luke.currentRow, new Vector2(10, 25), Color.Purple);
+                    spriteBatch.DrawString(font, "Direction: " + luke.direction, new Vector2(10, 40), Color.Purple);
+                    break;
+            }
+            
             spriteBatch.End();
 
             base.Draw(gameTime);

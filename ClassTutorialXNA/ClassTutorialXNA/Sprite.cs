@@ -13,6 +13,7 @@ namespace ClassTutorialXNA
     {
         public Texture2D texture;
         public Rectangle rectangle;
+        public Color color;
         public int screenWidth;
         public int screenHeight;
 
@@ -25,34 +26,6 @@ namespace ClassTutorialXNA
         {
             spriteBatch.Draw(texture, rectangle, Color.White);
         }
-    }
-
-    class Character : Sprite
-    {
-        public Character(Texture2D newTexture, Rectangle newRectangle, int screenWidth, int screenHeight)
-        {
-            this.texture = newTexture;
-            this.rectangle = newRectangle;
-            this.screenWidth = screenWidth;
-            this.screenHeight = screenHeight;
-        }
-
-        public override void Update()
-        {
-            if (Keyboard.GetState().IsKeyDown(Keys.Right))
-                rectangle.X += 3;
-
-            if (Keyboard.GetState().IsKeyDown(Keys.Left))
-                rectangle.X -= 3;
-
-            if (rectangle.X <= 0)
-                rectangle.X = -rectangle.X;
-
-            if (rectangle.X + texture.Width >= screenWidth)
-                rectangle.X = -rectangle.X;
-
-        }
-
     }
 
 }
