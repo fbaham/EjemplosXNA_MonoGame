@@ -13,6 +13,10 @@ namespace Plataformas2D
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        private Level level;
+
+        private KeyboardState keyboardState;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -27,7 +31,7 @@ namespace Plataformas2D
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            
 
             base.Initialize();
         }
@@ -41,7 +45,7 @@ namespace Plataformas2D
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            level = new Level(Services);
         }
 
         /// <summary>
@@ -63,9 +67,16 @@ namespace Plataformas2D
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            HandleInput(gameTime);
+
+            level.Update(gameTime, keyboardState);
 
             base.Update(gameTime);
+        }
+
+        private void HandleInput(GameTime gameTime)
+        {
+            keyboardState = Keyboard.GetState();
         }
 
         /// <summary>
@@ -75,9 +86,9 @@ namespace Plataformas2D
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
-
+            spriteBatch.Begin();
+            level.Draw(gameTime, spriteBatch);
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }

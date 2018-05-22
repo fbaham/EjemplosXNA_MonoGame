@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="Game1.cs" />
     <Compile Include="GameContent\Animation.cs" />
+    <Compile Include="GameContent\AnimationPlayer.cs" />
+    <Compile Include="GameContent\Level.cs" />
     <Compile Include="GameContent\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
