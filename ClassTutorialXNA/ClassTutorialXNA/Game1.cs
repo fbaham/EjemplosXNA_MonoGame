@@ -36,7 +36,7 @@ namespace ClassTutorialXNA
         Scrolling[] clouds;
 
         // Game World
-        Animation luke;
+        Player luke;
 
         public Game1()
         {
@@ -52,8 +52,23 @@ namespace ClassTutorialXNA
         /// </summary>
         protected override void Initialize()
         {
+            sky = new Scrolling(Content.Load<Texture2D>("layers/sky"), new Rectangle(0, 0, 800, 480), Color.White);
+
+            rocksBack1 = new Scrolling(Content.Load<Texture2D>("layers/rocks_1"), new Rectangle(0, 0, 800, 480), Color.White);
+            rocksFront1 = new Scrolling(Content.Load<Texture2D>("layers/rocks_2"), new Rectangle(0, 0, 800, 480), Color.White);
+
+            rocksBack2 = new Scrolling(Content.Load<Texture2D>("layers/rocks_1"), new Rectangle(800, 0, 800, 480), Color.White);
+            rocksFront2 = new Scrolling(Content.Load<Texture2D>("layers/rocks_2"), new Rectangle(800, 0, 800, 480), Color.White);
+
+            rocksFront2 = new Scrolling(Content.Load<Texture2D>("layers/rocks_2"), new Rectangle(800, 0, 800, 480), Color.White);
+
             clouds = new Scrolling[4];
-            luke = new Animation(Content.Load<Texture2D>("Sprites/Luke"), new Vector2(100, 400), 49, 49);
+            clouds[0] = new Scrolling(Content.Load<Texture2D>("layers/clouds_1"), new Rectangle(0, 0, 800, 480), Color.White);
+            clouds[1] = new Scrolling(Content.Load<Texture2D>("layers/clouds_2"), new Rectangle(0, 0, 800, 480), Color.White);
+            clouds[2] = new Scrolling(Content.Load<Texture2D>("layers/clouds_3"), new Rectangle(0, 0, 800, 480), Color.White);
+            clouds[3] = new Scrolling(Content.Load<Texture2D>("layers/clouds_4"), new Rectangle(0, 0, 800, 480), Color.White);
+
+            luke = new Player(Content.Load<Texture2D>("Sprites/Luke"), new Vector2(100, 400), 49, 49);
 
             base.Initialize();
         }
@@ -66,20 +81,7 @@ namespace ClassTutorialXNA
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            sky = new Scrolling(Content.Load<Texture2D>("layers/sky"), new Rectangle(0, 0, 800, 480), Color.White);
-
-            rocksBack1 = new Scrolling(Content.Load<Texture2D>("layers/rocks_1"), new Rectangle(0, 0, 800, 480), Color.White);
-            rocksFront1 = new Scrolling(Content.Load<Texture2D>("layers/rocks_2"), new Rectangle(0, 0, 800, 480), Color.White);
-
-            rocksBack2 = new Scrolling(Content.Load<Texture2D>("layers/rocks_1"), new Rectangle(800, 0, 800, 480), Color.White);
-            rocksFront2 = new Scrolling(Content.Load<Texture2D>("layers/rocks_2"), new Rectangle(800, 0, 800, 480), Color.White);
-
-            rocksFront2 = new Scrolling(Content.Load<Texture2D>("layers/rocks_2"), new Rectangle(800, 0, 800, 480), Color.White);
-
-            clouds[0] = new Scrolling(Content.Load<Texture2D>("layers/clouds_1"), new Rectangle(0, 0, 800, 480), Color.White);
-            clouds[1] = new Scrolling(Content.Load<Texture2D>("layers/clouds_2"), new Rectangle(0, 0, 800, 480), Color.White);
-            clouds[2] = new Scrolling(Content.Load<Texture2D>("layers/clouds_3"), new Rectangle(0, 0, 800, 480), Color.White);
-            clouds[3] = new Scrolling(Content.Load<Texture2D>("layers/clouds_4"), new Rectangle(0, 0, 800, 480), Color.White);
+            
 
             font = Content.Load<SpriteFont>("Fonts/basicFont");
 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/francisco.bahamondes/source/repos/XNA/ClassTutorialXNA/ClassTutorialXNA/Content/layers/rocks_2.png</SourceFile>
-  <SourceTime>2018-05-18T15:37:11.536652-04:00</SourceTime>
-  <DestFile>C:/Users/francisco.bahamondes/source/repos/XNA/ClassTutorialXNA/ClassTutorialXNA/Content/bin/Windows/layers/rocks_2.xnb</DestFile>
-  <DestTime>2018-05-19T10:44:02.997724-04:00</DestTime>
+  <SourceFile>C:/Users/franc/source/repos/EjemplosXNA_MonoGame/ClassTutorialXNA/ClassTutorialXNA/Content/layers/rocks_2.png</SourceFile>
+  <SourceTime>2018-05-18T20:42:39.3829102-04:00</SourceTime>
+  <DestFile>C:/Users/franc/source/repos/EjemplosXNA_MonoGame/ClassTutorialXNA/ClassTutorialXNA/Content/bin/Windows/layers/rocks_2.xnb</DestFile>
+  <DestTime>2018-05-21T19:50:55.6459313-04:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T12:05:36-03:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

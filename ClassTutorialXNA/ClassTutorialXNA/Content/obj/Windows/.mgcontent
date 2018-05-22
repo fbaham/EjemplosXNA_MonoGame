@@ -4,16 +4,16 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/francisco.bahamondes/source/repos/XNA/ClassTutorialXNA/ClassTutorialXNA/Content/Luke_idle.png</File>
-    <File>C:/Users/francisco.bahamondes/source/repos/XNA/ClassTutorialXNA/ClassTutorialXNA/Content/layers/clouds_1.png</File>
-    <File>C:/Users/francisco.bahamondes/source/repos/XNA/ClassTutorialXNA/ClassTutorialXNA/Content/layers/clouds_2.png</File>
-    <File>C:/Users/francisco.bahamondes/source/repos/XNA/ClassTutorialXNA/ClassTutorialXNA/Content/layers/clouds_3.png</File>
-    <File>C:/Users/francisco.bahamondes/source/repos/XNA/ClassTutorialXNA/ClassTutorialXNA/Content/layers/clouds_4.png</File>
-    <File>C:/Users/francisco.bahamondes/source/repos/XNA/ClassTutorialXNA/ClassTutorialXNA/Content/layers/rocks_1.png</File>
-    <File>C:/Users/francisco.bahamondes/source/repos/XNA/ClassTutorialXNA/ClassTutorialXNA/Content/layers/rocks_2.png</File>
-    <File>C:/Users/francisco.bahamondes/source/repos/XNA/ClassTutorialXNA/ClassTutorialXNA/Content/layers/sky.png</File>
-    <File>C:/Users/francisco.bahamondes/source/repos/XNA/ClassTutorialXNA/ClassTutorialXNA/Content/Sprites/player.jpg</File>
-    <File>C:/Users/francisco.bahamondes/source/repos/XNA/ClassTutorialXNA/ClassTutorialXNA/Content/Fonts/basicFont.spritefont</File>
-    <File>C:/Users/francisco.bahamondes/source/repos/XNA/ClassTutorialXNA/ClassTutorialXNA/Content/Sprites/Luke.png</File>
+    <File>C:/Users/franc/source/repos/EjemplosXNA_MonoGame/ClassTutorialXNA/ClassTutorialXNA/Content/Luke_idle.png</File>
+    <File>C:/Users/franc/source/repos/EjemplosXNA_MonoGame/ClassTutorialXNA/ClassTutorialXNA/Content/layers/clouds_1.png</File>
+    <File>C:/Users/franc/source/repos/EjemplosXNA_MonoGame/ClassTutorialXNA/ClassTutorialXNA/Content/layers/clouds_2.png</File>
+    <File>C:/Users/franc/source/repos/EjemplosXNA_MonoGame/ClassTutorialXNA/ClassTutorialXNA/Content/layers/clouds_3.png</File>
+    <File>C:/Users/franc/source/repos/EjemplosXNA_MonoGame/ClassTutorialXNA/ClassTutorialXNA/Content/layers/clouds_4.png</File>
+    <File>C:/Users/franc/source/repos/EjemplosXNA_MonoGame/ClassTutorialXNA/ClassTutorialXNA/Content/layers/rocks_1.png</File>
+    <File>C:/Users/franc/source/repos/EjemplosXNA_MonoGame/ClassTutorialXNA/ClassTutorialXNA/Content/layers/rocks_2.png</File>
+    <File>C:/Users/franc/source/repos/EjemplosXNA_MonoGame/ClassTutorialXNA/ClassTutorialXNA/Content/layers/sky.png</File>
+    <File>C:/Users/franc/source/repos/EjemplosXNA_MonoGame/ClassTutorialXNA/ClassTutorialXNA/Content/Sprites/player.jpg</File>
+    <File>C:/Users/franc/source/repos/EjemplosXNA_MonoGame/ClassTutorialXNA/ClassTutorialXNA/Content/Fonts/basicFont.spritefont</File>
+    <File>C:/Users/franc/source/repos/EjemplosXNA_MonoGame/ClassTutorialXNA/ClassTutorialXNA/Content/Sprites/Luke.png</File>
   </SourceFiles>
 </SourceFileCollection>

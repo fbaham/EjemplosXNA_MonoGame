@@ -16,27 +16,4 @@ namespace ClassTutorialXNA
             spriteBatch.Draw(texture, rectangle, color);
         }
     }
-
-    class Scrolling : Background
-    {
-        public Scrolling(Texture2D newTexture, Rectangle newRectange, Color newColor)
-        {
-            texture = newTexture;
-            rectangle = newRectange;
-            color = newColor;
-        }
-
-        public new void Update()
-        {
-            //if (Keyboard.GetState().IsKeyDown(Keys.Right))
-            //    rectangle.X -= 3;
-
-            //if (Keyboard.GetState().IsKeyDown(Keys.Left))
-            //    rectangle.X += 3;
-
-            //rectangle.X -= 3;
-
-        }
-
-    }
 }
