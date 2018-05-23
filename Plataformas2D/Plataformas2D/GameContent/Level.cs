@@ -12,9 +12,9 @@ namespace Plataformas2D.GameContent
 {
     class Level : IDisposable
     {
+        #region Constructor
         Player player;
         ContentManager content;
-
         private Vector2 start;
 
         public Level(IServiceProvider serviceProvider)
@@ -22,10 +22,14 @@ namespace Plataformas2D.GameContent
             content = new ContentManager(serviceProvider, "Content");
             loadPlayer();
         }
+        #endregion
 
+        #region Propiedades
         public ContentManager Content { get => content; }
         internal Player Player { get => player; }
+        #endregion
 
+        #region Métodos
         private void loadPlayer()
         {
             start = new Vector2(80, 80);
@@ -46,5 +50,6 @@ namespace Plataformas2D.GameContent
         {
             Player.Draw(gameTime, spriteBatch);
         }
+        #endregion
     }
 }

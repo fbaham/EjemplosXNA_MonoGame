@@ -11,6 +11,7 @@ namespace Plataformas2D.GameContent
 {
     struct AnimationPlayer
     {
+        #region Propiedades
         Animation animation;
         int frameIndex;
         float time;
@@ -18,7 +19,9 @@ namespace Plataformas2D.GameContent
         public Animation Animation { get => animation; }
         public int FrameIndex { get => frameIndex; }
         public Vector2 Origin { get => new Vector2(Animation.FrameWidth / 2, Animation.FrameHeight / 2); }
+        #endregion
 
+        #region Métodos
         public void PlayAnimation(Animation animation)
         {
             if (Animation == animation)
@@ -48,7 +51,7 @@ namespace Plataformas2D.GameContent
 
             spriteBatch.Draw(Animation.Texture, position, source, Color.White, 0f, Origin, 1.0f, spriteEffects, 0);
         }
-
+        #endregion
     }
 }
 
