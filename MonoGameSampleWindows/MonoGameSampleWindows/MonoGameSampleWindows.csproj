@@ -6,11 +6,11 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{E94235A9-16F3-4BA6-B796-CA652002D315}</ProjectGuid>
+    <ProjectGuid>{4248236E-46BC-4684-BC6F-07442E71D242}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Plataformas2D</RootNamespace>
-    <AssemblyName>Plataformas2D</AssemblyName>
+    <RootNamespace>MonoGameSampleWindows</RootNamespace>
+    <AssemblyName>MonoGameSampleWindows</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MonoGamePlatform>Windows</MonoGamePlatform>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
@@ -42,15 +42,18 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Game1.cs" />
-    <Compile Include="GameContent\Accelerometer.cs" />
-    <Compile Include="GameContent\Animation.cs" />
-    <Compile Include="GameContent\AnimationPlayer.cs" />
-    <Compile Include="GameContent\Level.cs" />
-    <Compile Include="GameContent\Player.cs" />
-    <Compile Include="GameContent\RectangleExtensions.cs" />
-    <Compile Include="GameContent\Tile.cs" />
-    <Compile Include="GameContent\TouchCollectionExtensions.cs" />
-    <Compile Include="GameContent\VirtualGamePad.cs" />
+    <Compile Include="Game\Accelerometer.cs" />
+    <Compile Include="Game\Animation.cs" />
+    <Compile Include="Game\AnimationPlayer.cs" />
+    <Compile Include="Game\Circle.cs" />
+    <Compile Include="Game\Enemy.cs" />
+    <Compile Include="Game\Gem.cs" />
+    <Compile Include="Game\Level.cs" />
+    <Compile Include="Game\Player.cs" />
+    <Compile Include="Game\RectangleExtensions.cs" />
+    <Compile Include="Game\Tile.cs" />
+    <Compile Include="Game\TouchCollectionExtensions.cs" />
+    <Compile Include="Game\VirtualGamePad.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

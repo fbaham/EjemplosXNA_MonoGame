@@ -41,9 +41,9 @@ namespace Plataformas2D.GameContent
             Content.Unload();
         }
 
-        public void Update(GameTime gameTime, KeyboardState keyboardState)
+        public void Update(GameTime gameTime, KeyboardState keyboardState, GamePadState gamePadState, AccelerometerState accelState, DisplayOrientation orientation)
         {
-            Player.Update(gameTime, keyboardState);
+            Player.Update(gameTime, keyboardState, gamePadState, accelState, orientation);
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)

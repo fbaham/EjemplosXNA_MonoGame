@@ -1,40 +1,98 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+#region File Description
+//-----------------------------------------------------------------------------
+// Player.cs
+//
+// Microsoft XNA Community Game Platform
+// Copyright (C) Microsoft Corporation. All rights reserved.
+//-----------------------------------------------------------------------------
+#endregion
 
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace Plataformas2D.GameContent
+namespace Platformer2D
 {
+    /// <summary>
+    /// Our fearless adventurer!
+    /// </summary>
     class Player
     {
-        #region Constructor
-
-        // Animaciones
-        private Animation playerIdle;
-        private Animation playerRun;
-        private Animation playerJump;
-        private Animation playerAttack;
-        private Animation playerDeath;
+        // Animations
+        private Animation idleAnimation;
+        private Animation runAnimation;
+        private Animation jumpAnimation;
+        private Animation celebrateAnimation;
+        private Animation dieAnimation;
         private SpriteEffects flip = SpriteEffects.None;
         private AnimationPlayer sprite;
 
-        // Sonidos
+        // Sounds
         private SoundEffect killedSound;
         private SoundEffect jumpSound;
         private SoundEffect fallSound;
 
+        public Level Level
+        {
+            get { return level; }
+        }
+        Level level;
+
+        public bool IsAlive
+        {
+            get { return isAlive; }
+        }
+        bool isAlive;
+
+        // Physics state
+        public Vector2 Position
+        {
+            get { return position; }
+            set { position = value; }
+        }
+        Vector2 position;
+
+        private float previousBottom;
+
+        public Vector2 Velocity
+        {
+            get { return velocity; }
+            set { velocity = value; }
+        }
         Vector2 velocity;
 
-        bool isAlive;
+        // Constants for controling horizontal movement
+        private const float MoveAcceleration = 13000.0f;
+        private const float MaxMoveSpeed = 1750.0f;
+        private const float GroundDragFactor = 0.48f;
+        private const float AirDragFactor = 0.58f;
+
+        // Constants for controlling vertical movement
+        private const float MaxJumpTime = 0.35f;
+        private const float JumpLaunchVelocity = -3500.0f;
+        private const float GravityAcceleration = 3400.0f;
+        private const float MaxFallSpeed = 550.0f;
+        private const float JumpControlPower = 0.14f; 
+
+        // Input configuration
+        private const float MoveStickScale = 1.0f;
+        private const float AccelerometerScale = 1.5f;
+        private const Buttons JumpButton = Buttons.A;
+
+        /// <summary>
+        /// Gets whether or not the player's feet are on the ground.
+        /// </summary>
+        public bool IsOnGround
+        {
+            get { return isOnGround; }
+        }
         bool isOnGround;
 
-        // Entrada de movimiento del usuario actual
+        /// <summary>
+        /// Current user movement input.
+        /// </summary>
         private float movement;
 
         // Jumping state
@@ -42,52 +100,10 @@ namespace Plataformas2D.GameContent
         private bool wasJumping;
         private float jumpTime;
 
-        Level level;
-        Vector2 position;
-
-        SpriteFont font;
-
-        private float previousBottom;
-
-        // Rectangulos de limites
         private Rectangle localBounds;
-
-        // Constantes para controlar el movimiento horizontal
-        private const float MoveAcceleration = 13000.0f;
-        private const float MaxMoveSpeed = 1750.0f;
-        private const float GroundDragFactor = 0.48f;
-        private const float AirDragFactor = 0.58f;
-
-        // Constantes para controlar el movimiento vertical
-        private const float MaxJumpTime = 0.35f;
-        private const float JumpLaunchVelocity = -3500.0f;
-        private const float GravityAcceleration = 3400.0f;
-        private const float MaxFallSpeed = 550.0f;
-        private const float JumpControlPower = 0.14f;
-
-        // Configuración de entrada
-        private const float MoveStickScale = 1.0f;
-        private const float AccelerometerScale = 1.5f;
-        private const Buttons JumpButton = Buttons.A;
-        
-        public Player(Level level, Vector2 position)
-        {
-            this.level = level;
-
-            LoadContent();
-
-            Reset(position);
-        }
-
-        #endregion
-
-        #region Propiedades
-
-        internal Level Level { get => level; }
-        public Vector2 Velocity { get => velocity; set => velocity = value; }
-        public Vector2 Position { get => position; set => position = value; }
-        public bool IsAlive { get => isAlive; }
-        public bool IsOnGround { get => isOnGround; set => isOnGround = value; }
+        /// <summary>
+        /// Gets a rectangle which bounds this player in world space.
+        /// </summary>
         public Rectangle BoundingRectangle
         {
             get
@@ -99,66 +115,99 @@ namespace Plataformas2D.GameContent
             }
         }
 
-        #endregion
+        /// <summary>
+        /// Constructors a new player.
+        /// </summary>
+        public Player(Level level, Vector2 position)
+        {
+            this.level = level;
 
-        #region Metodos
+            LoadContent();
 
+            Reset(position);
+        }
+
+        /// <summary>
+        /// Loads the player sprite sheet and sounds.
+        /// </summary>
+        public void LoadContent()
+        {
+            // Load animated textures.
+            idleAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Idle"), 0.1f, true);
+            runAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Run"), 0.1f, true);
+            jumpAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Jump"), 0.1f, false);
+            celebrateAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Celebrate"), 0.1f, false);
+            dieAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Die"), 0.1f, false);
+
+            // Calculate bounds within texture size.            
+            int width = (int)(idleAnimation.FrameWidth * 0.4);
+            int left = (idleAnimation.FrameWidth - width) / 2;
+            int height = (int)(idleAnimation.FrameWidth * 0.8);
+            int top = idleAnimation.FrameHeight - height;
+            localBounds = new Rectangle(left, top, width, height);
+
+            // Load sounds.            
+            killedSound = Level.Content.Load<SoundEffect>("Sounds/PlayerKilled");
+            jumpSound = Level.Content.Load<SoundEffect>("Sounds/PlayerJump");
+            fallSound = Level.Content.Load<SoundEffect>("Sounds/PlayerFall");
+        }
+
+        /// <summary>
+        /// Resets the player to life.
+        /// </summary>
+        /// <param name="position">The position to come to life at.</param>
         public void Reset(Vector2 position)
         {
             Position = position;
             Velocity = Vector2.Zero;
             isAlive = true;
-            sprite.PlayAnimation(playerIdle);
+            sprite.PlayAnimation(idleAnimation);
         }
 
-        private void LoadContent()
-        {
-            // Carga de las texturas para animar
-            playerIdle = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/player1"),48,48,7,0,50);
-            playerRun = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/player1"), 48, 48, 7, 1, 50);
-            playerJump = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/player1"), 48, 48, 7, 4, 50);
-            playerAttack = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/player1"), 48, 48, 7, 2, 50);
-            playerDeath = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/player1"), 48, 48, 7, 3, 50);
-
-            // Calcula los límites con el tamaño de las texturas
-            int width = (int)(playerIdle.FrameWidth * 0.4);
-            int left = (playerIdle.FrameWidth - width) / 2;
-            int height = (int)(playerIdle.FrameHeight * 0.8);
-            int top = playerIdle.FrameHeight - height;
-            localBounds = new Rectangle(left, top, width, height);
-
-            //Carga sonidos
-            killedSound = Level.Content.Load<SoundEffect>("Sounds/PlayerKilled");
-            jumpSound = Level.Content.Load<SoundEffect>("Sounds/PlayerJump");
-            fallSound = Level.Content.Load<SoundEffect>("Sounds/PlayerFall");
-
-            font = Level.Content.Load<SpriteFont>("basicFont");
-        }
-
-        public void Update(GameTime gameTime, KeyboardState keyboardState, GamePadState gamePadState, AccelerometerState accelState, DisplayOrientation orientation)
+        /// <summary>
+        /// Handles input, performs physics, and animates the player sprite.
+        /// </summary>
+        /// <remarks>
+        /// We pass in all of the input states so that our game is only polling the hardware
+        /// once per frame. We also pass the game's orientation because when using the accelerometer,
+        /// we need to reverse our motion when the orientation is in the LandscapeRight orientation.
+        /// </remarks>
+        public void Update(
+            GameTime gameTime, 
+            KeyboardState keyboardState, 
+            GamePadState gamePadState, 
+            AccelerometerState accelState,
+            DisplayOrientation orientation)
         {
             GetInput(keyboardState, gamePadState, accelState, orientation);
+
             ApplyPhysics(gameTime);
 
             if (IsAlive && IsOnGround)
             {
                 if (Math.Abs(Velocity.X) - 0.02f > 0)
                 {
-                    sprite.PlayAnimation(playerRun);
+                    sprite.PlayAnimation(runAnimation);
                 }
                 else
                 {
-                    sprite.PlayAnimation(playerIdle);
+                    sprite.PlayAnimation(idleAnimation);
                 }
             }
 
             // Clear input.
             movement = 0.0f;
             isJumping = false;
-
         }
 
-        private void GetInput(KeyboardState keyboardState, GamePadState gamePadState, AccelerometerState accelState, DisplayOrientation orientation)
+        /// <summary>
+        /// Gets player horizontal movement and jump commands from input.
+        /// </summary>
+        private void GetInput(
+            KeyboardState keyboardState, 
+            GamePadState gamePadState,
+            AccelerometerState accelState, 
+            DisplayOrientation orientation)
         {
             // Get analog horizontal movement.
             movement = gamePadState.ThumbSticks.Left.X * MoveStickScale;
@@ -198,11 +247,13 @@ namespace Plataformas2D.GameContent
                 keyboardState.IsKeyDown(Keys.Space) ||
                 keyboardState.IsKeyDown(Keys.Up) ||
                 keyboardState.IsKeyDown(Keys.W);
-
         }
-        private void ApplyPhysics(GameTime gameTime)
-        {
 
+        /// <summary>
+        /// Updates the player's velocity and position based on input, gravity, etc.
+        /// </summary>
+        public void ApplyPhysics(GameTime gameTime)
+        {
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             Vector2 previousPosition = Position;
@@ -238,6 +289,23 @@ namespace Plataformas2D.GameContent
                 velocity.Y = 0;
         }
 
+        /// <summary>
+        /// Calculates the Y velocity accounting for jumping and
+        /// animates accordingly.
+        /// </summary>
+        /// <remarks>
+        /// During the accent of a jump, the Y velocity is completely
+        /// overridden by a power curve. During the decent, gravity takes
+        /// over. The jump velocity is controlled by the jumpTime field
+        /// which measures time into the accent of the current jump.
+        /// </remarks>
+        /// <param name="velocityY">
+        /// The player's current velocity along the Y axis.
+        /// </param>
+        /// <returns>
+        /// A new Y velocity if beginning or continuing a jump.
+        /// Otherwise, the existing Y velocity.
+        /// </returns>
         private float DoJump(float velocityY, GameTime gameTime)
         {
             // If the player wants to jump
@@ -247,10 +315,10 @@ namespace Plataformas2D.GameContent
                 if ((!wasJumping && IsOnGround) || jumpTime > 0.0f)
                 {
                     if (jumpTime == 0.0f)
-                        //jumpSound.Play();
+                        jumpSound.Play();
 
                     jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    sprite.PlayAnimation(playerJump);
+                    sprite.PlayAnimation(jumpAnimation);
                 }
 
                 // If we are in the ascent of the jump
@@ -351,39 +419,39 @@ namespace Plataformas2D.GameContent
         /// The enemy who killed the player. This parameter is null if the player was
         /// not killed by an enemy (fell into a hole).
         /// </param>
-        //public void OnKilled(Enemy killedBy)
-        //{
-        //    isAlive = false;
-            
-        //    if (killedBy != null)
-        //        killedSound.Play();
-        //    else
-        //        fallSound.Play();
-            
-        //    sprite.PlayAnimation(playerDeath);
-        //}
+        public void OnKilled(Enemy killedBy)
+        {
+            isAlive = false;
+
+            if (killedBy != null)
+                killedSound.Play();
+            else
+                fallSound.Play();
+
+            sprite.PlayAnimation(dieAnimation);
+        }
 
         /// <summary>
         /// Called when this player reaches the level's exit.
         /// </summary>
         public void OnReachedExit()
         {
-            sprite.PlayAnimation(playerAttack);
+            sprite.PlayAnimation(celebrateAnimation);
         }
 
+        /// <summary>
+        /// Draws the animated player.
+        /// </summary>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            // Flip the sprite to face the way we are moving.
             if (Velocity.X > 0)
                 flip = SpriteEffects.FlipHorizontally;
             else if (Velocity.X < 0)
                 flip = SpriteEffects.None;
 
-            // Dibuja Sprites
+            // Draw that sprite.
             sprite.Draw(gameTime, spriteBatch, Position, flip);
-            spriteBatch.DrawString(font, "Position: " + Position.X, new Vector2(10,10), Color.Red);
-            spriteBatch.DrawString(font, "Velocity: " + Velocity.X, new Vector2(10, 25), Color.Red);
-
         }
-        #endregion
     }
 }
