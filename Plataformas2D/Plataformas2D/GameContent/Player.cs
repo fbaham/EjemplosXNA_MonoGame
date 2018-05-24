@@ -200,7 +200,7 @@ namespace Plataformas2D.GameContent
                 keyboardState.IsKeyDown(Keys.W);
 
         }
-        private void ApplyPhysics(GameTime gameTime)
+        public void ApplyPhysics(GameTime gameTime)
         {
 
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -377,7 +377,7 @@ namespace Plataformas2D.GameContent
                 flip = SpriteEffects.FlipHorizontally;
             else if (Velocity.X < 0)
                 flip = SpriteEffects.None;
-
+            position.Y = 400;
             // Dibuja Sprites
             sprite.Draw(gameTime, spriteBatch, Position, flip);
             spriteBatch.DrawString(font, "Position: " + Position.X, new Vector2(10,10), Color.Red);
