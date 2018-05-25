@@ -24,6 +24,8 @@ namespace Plataformas2D.GameContent
         private SpriteEffects flip = SpriteEffects.None;
         private AnimationPlayer sprite;
 
+        Keys[] keys;
+
         // Sonidos
         private SoundEffect killedSound;
         private SoundEffect jumpSound;
@@ -140,7 +142,7 @@ namespace Plataformas2D.GameContent
             GetInput(keyboardState, gamePadState, accelState, orientation);
             ApplyPhysics(gameTime);
 
-            if (IsAlive && IsOnGround)
+            if (IsAlive)
             {
                 if (Math.Abs(Velocity.X) - 0.02f > 0)
                 {
@@ -162,7 +164,7 @@ namespace Plataformas2D.GameContent
         {
             // Get analog horizontal movement.
             movement = gamePadState.ThumbSticks.Left.X * MoveStickScale;
-
+            keys = keyboardState.GetPressedKeys();
             // Ignore small movements to prevent running in place.
             if (Math.Abs(movement) < 0.5f)
                 movement = 0.0f;
@@ -382,6 +384,14 @@ namespace Plataformas2D.GameContent
             sprite.Draw(gameTime, spriteBatch, Position, flip);
             spriteBatch.DrawString(font, "Position: " + Position.X, new Vector2(10,10), Color.Red);
             spriteBatch.DrawString(font, "Velocity: " + Velocity.X, new Vector2(10, 25), Color.Red);
+            spriteBatch.DrawString(font, "Sprite source: " + sprite.Animation.FrameRow, new Vector2(10, 40), Color.Red);
+            spriteBatch.DrawString(font, "Jump: " + isJumping, new Vector2(10, 55), Color.Red);
+            int k = 70;
+            foreach (Keys key in keys)
+            {
+                spriteBatch.DrawString(font, key.ToString(), new Vector2(10, k), Color.Red);
+                k += 15;
+            }
 
         }
         #endregion

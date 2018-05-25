@@ -17,7 +17,7 @@ namespace Plataformas2D.GameContent
 
         // Estructura física del nivel
         private Tile[,] tiles;
-        private Texture2D[] layers;
+        //private Texture2D[] layers;
 
         // Capa sobre la que se dibujan las entidades 
         private const int EntityLayer = 2;
@@ -50,13 +50,13 @@ namespace Plataformas2D.GameContent
             LoadTiles(fileStream);
             //loadPlayer();
 
-            layers = new Texture2D[3];
-            for (int i = 0; i < layers.Length; ++i)
-            {
-                // Choose a random segment if each background layer for level variety.
-                int segmentIndex = levelIndex;
-                layers[i] = Content.Load<Texture2D>("Backgrounds/Layer" + i + "_" + segmentIndex);
-            }
+            //layers = new Texture2D[3];
+            //for (int i = 0; i < layers.Length; ++i)
+            //{
+            //    // Choose a random segment if each background layer for level variety.
+            //    int segmentIndex = levelIndex;
+            //    layers[i] = Content.Load<Texture2D>("Backgrounds/Layer" + i + "_" + segmentIndex);
+            //}
 
             // Load sounds.
             //exitReachedSound = Content.Load<SoundEffect>("Sounds/ExitReached");
@@ -69,11 +69,19 @@ namespace Plataformas2D.GameContent
         
         public ContentManager Content { get => content; }
         internal Player Player { get => player; }
-        public int Width { get => 16; }//tiles.GetLenght(0); }
-        public int Height { get => 16; }//tiles.GetLenght(0); }
         public int Score { get => score;}
         public bool ReachedExit { get => reachedExit;}
         public TimeSpan TimeRemaining { get => timeRemaining;}
+
+        public int Width
+        {
+            get { return tiles.GetLength(0); }
+        }
+
+        public int Height
+        {
+            get { return tiles.GetLength(1); }
+        }
 
         #endregion
 
@@ -173,7 +181,7 @@ namespace Plataformas2D.GameContent
 
         private Tile LoadTile(string name, TileCollision collision)
         {
-            return new Tile(Content.Load<Texture2D>("Tiles/dungeon" + name), collision);
+            return new Tile(Content.Load<Texture2D>("Tiles/dungeon"), collision);
         }
 
         private Tile LoadVarietyTile(string baseName, int variationCount, TileCollision collision)
@@ -360,8 +368,8 @@ namespace Plataformas2D.GameContent
         #region Draw
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            for (int i = 0; i <= EntityLayer; ++i)
-                spriteBatch.Draw(layers[i], Vector2.Zero, Color.White);
+            //for (int i = 0; i <= EntityLayer; ++i)
+            //    spriteBatch.Draw(layers[i], Vector2.Zero, Color.White);
 
             DrawTiles(spriteBatch);
 
@@ -373,8 +381,8 @@ namespace Plataformas2D.GameContent
             //foreach (Enemy enemy in enemies)
             //    enemy.Draw(gameTime, spriteBatch);
 
-            for (int i = EntityLayer + 1; i < layers.Length; ++i)
-                spriteBatch.Draw(layers[i], Vector2.Zero, Color.White);
+            //for (int i = EntityLayer + 1; i < layers.Length; ++i)
+            //    spriteBatch.Draw(layers[i], Vector2.Zero, Color.White);
         }
 
         private void DrawTiles(SpriteBatch spriteBatch)
@@ -390,7 +398,7 @@ namespace Plataformas2D.GameContent
                     {
                         // Draw it in screen space.
                         Vector2 position = new Vector2(x, y) * Tile.Size;
-                        spriteBatch.Draw(texture, position, Color.White);
+                        spriteBatch.Draw(texture, position, new Rectangle(16,16,0,0), Color.White);
                     }
                 }
             }

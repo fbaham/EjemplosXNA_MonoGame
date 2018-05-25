@@ -104,3 +104,12 @@
 /processorParam:TextureFormat=Color
 /build:Tiles/dungeon.png
 
+#begin Levels/0.txt
+/copy:Levels/0.txt
+
+#begin Levels/1.txt
+/copy:Levels/1.txt
+
+#begin Levels/2.txt
+/copy:Levels/2.txt
+
