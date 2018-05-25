@@ -142,7 +142,7 @@ namespace Plataformas2D.GameContent
             GetInput(keyboardState, gamePadState, accelState, orientation);
             ApplyPhysics(gameTime);
 
-            if (IsAlive)
+            if (IsAlive && IsOnGround)
             {
                 if (Math.Abs(Velocity.X) - 0.02f > 0)
                 {
@@ -276,7 +276,7 @@ namespace Plataformas2D.GameContent
 
             return velocityY;
         }
-
+        Rectangle test;
         /// <summary>
         /// Detects and resolves all collisions between the player and his neighboring
         /// tiles. When a collision is detected, the player is pushed away along one
@@ -306,6 +306,7 @@ namespace Plataformas2D.GameContent
                     {
                         // Determine collision depth (with direction) and magnitude.
                         Rectangle tileBounds = Level.GetBounds(x, y);
+                        test = tileBounds;
                         Vector2 depth = RectangleExtensions.GetIntersectionDepth(bounds, tileBounds);
                         if (depth != Vector2.Zero)
                         {
@@ -385,8 +386,9 @@ namespace Plataformas2D.GameContent
             spriteBatch.DrawString(font, "Position: " + Position.X, new Vector2(10,10), Color.Red);
             spriteBatch.DrawString(font, "Velocity: " + Velocity.X, new Vector2(10, 25), Color.Red);
             spriteBatch.DrawString(font, "Sprite source: " + sprite.Animation.FrameRow, new Vector2(10, 40), Color.Red);
-            spriteBatch.DrawString(font, "Jump: " + isJumping, new Vector2(10, 55), Color.Red);
-            int k = 70;
+            spriteBatch.DrawString(font, "Jump: " + previousBottom, new Vector2(10, 55), Color.Red);
+            spriteBatch.DrawString(font, "Jump: " + test.Top, new Vector2(10, 70), Color.Red);
+            int k = 85;
             foreach (Keys key in keys)
             {
                 spriteBatch.DrawString(font, key.ToString(), new Vector2(10, k), Color.Red);
